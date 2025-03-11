@@ -1,100 +1,101 @@
-#Фунция спроса и предложения товара заданны уравнениями Qd=300- P
-# Qs= P/2 - 30. Государство установило налог в размере 15 д.ед за единицу товара
-# Налог уплачивает покупатель. Определите параметры начального равновесия
-# Равновесия после налога, изменение выигрышей покупателей и продавцов
-# Налоговые поступления и чистые потери общества ( задача 1.26)
-#Вводим значения коэффицентов
+# Part of a case-study #2: Microeconomics
+# Developers: Lagoda K., Pinoeva K., Zheravina N., Mozhitseva M.
 
 
 import local as lcl
 
 
 def demand(price, a, b):
-    '''
-    Функция описывающая величину спроса
-    :param Price: Цена товара
-    :param a:
-    :param b:
-    :return: Quantity_demand
-    '''
-    Quantity_demand= a - b*price
-    return Quantity_demand
+    """Function describing the quantity of supply.
+    
+    :param price: price of the product
+    :param a: demand cutoff price
+    :param b: tangent of the angle of inclination
+    :return: quantity_demand
+    """
+    quantity_demand = a - b * price
+    return quantity_demand
 
 
 def supply(price, c, d):
-    '''
-    Функция описывающая величину предложения
-    :param Price: Цена товара
-    :param c:
-    :param d:
-    :return: Quantity_supply
-    '''
-    Quantity_supply = c - d * price
-    return Quantity_supply
+    """Function describing the quantity of supply.
+   
+    :param price: price of the product
+    :param c: minimum supply
+    :param d: tangent of the angle of inclination
+    :return: quantity_supply
+    """
+    quantity_supply = c - d * price
+    return quantity_supply
 
 
-a = float(input("total_addressable_market"))
-b = float(input("slope_of_the_demand"))
-c = float(input("intersection_point_of_the_supply"))
-d = float(input("slope_of_the_supply"))
-t = float(input("tax_rate"))
+a = float(input(f"{lcl.TOTAL_ADDRESSABLE_MARKET}:"))
+b = float(input(f"{lcl.SLOPE_OF_THE_DEMAND}:"))
+c = float(input(f"{lcl.INTERSECTION_POINT_OF_THE_SUPPLY}:"))
+d = float(input(f"{lcl.SLOPE_OF_THE_SUPPLY}:"))
+t = float(input(f"{lcl.TAX_RATE}:"))
+# We enter the values ​​of the function coefficients
 
-
-#Находим начальное равновесие на рынке
-equilibrium_price = (a - c) / (d + b)
+equilibrium_price = (a-c) / (d+b)
 equilibrium_quantity = demand(equilibrium_price, a, b)
+# Finding the initial equilibrium in the market.
 
 
-#Находим цену покупателя и продавца после введения налога
-price_supply = (c - a + b * t) / (- b - d)
+price_supply = (c-a + b*t) / (-b-d)
 price_demand = price_supply + t
-quantity_1 = demand(price_demand,a,b)
+quantity_1 = demand(price_demand, a, b)
+""" We find the price of the consumer and producer after the introduction of
+the tax. """
 
 
-#Находим изменение объемов продаж и цен
 changing_quantity = quantity_1 - equilibrium_quantity
 changing_price = price_supply - equilibrium_price
+# We find changing in quantity and price.
 
-#Находим начальные, изменённые выигрыши и их изменение
-consumer_surplus_0= 1/2 * (a - equilibrium_price) * equilibrium_quantity
-consumer_surplus_1= 1/2 * (a - price_demand) * quantity_1
 
-if c<0:
-   producer_surplus_0 = 1 / 2 * (equilibrium_price + c / d) * equilibrium_quantity
-   producer_surplus_1 = 1 / 2 * (price_demand + c / d) * quantity_1
+consumer_surplus_0 = 1/2 * (a - equilibrium_price) * equilibrium_quantity
+consumer_surplus_1 = 1/2 * (a - price_demand) * quantity_1
+
+if c < 0:
+    producer_surplus_0 = 1 / 2 * (equilibrium_price +
+                                  c/d) * equilibrium_quantity
+    producer_surplus_1 = 1 / 2 * (price_demand + c/d) * quantity_1
 else:
     producer_surplus_0 = (c + equilibrium_quantity)/2 * equilibrium_price
-    producer_surplus_1 = (c + quantity_1) / 2 * price_supply
+    producer_surplus_1 = (c + quantity_1)/2 * price_supply
 
-changing_consumer_surplus= consumer_surplus_1 - consumer_surplus_0
-changing_producer_surplus= producer_surplus_1 - producer_surplus_0
+changing_consumer_s = consumer_surplus_1 - consumer_surplus_0
+changing_producer_s = producer_surplus_1 - producer_surplus_0
+# We find the initial, new surpluses and their changing.
 
 
-#Находим Налоговые поступления и чистые потери общества
-tax_burden_consumer= (price_demand - equilibrium_price) * quantity_1
-tax_burden_producer= (equilibrium_price - price_supply) * quantity_1
+tax_burden_consumer = (price_demand - equilibrium_price) * quantity_1
+tax_burden_producer = (equilibrium_price - price_supply) * quantity_1
 tax_revenue = quantity_1 * t
-deadweight_loss= -(price_demand - price_supply) * (equilibrium_quantity - quantity_1) * 1/2
+deadweight_loss = -(price_demand - price_supply) * (equilibrium_quantity -
+                                                    quantity_1) * 1/2
+# We find tax revenues and deadweight loss.
+
 
 def main():
- print("answer")
- print("initial_equilibrium_quantity", equilibrium_quantity)
- print("initial_equilibrium_price", equilibrium_price)
- print("new_equilibrium_quantity", quantity_1)
- print("new_produser_price", price_supply)
- print("new_consumer_price", price_demand)
- print("changing_of_the_quantity", changing_quantity)
- print("changing_of_the_price", changing_price)
- print("consumer_surplus_before_tax", consumer_surplus_0)
- print("consumer_surplus_after_tax", consumer_surplus_1)
- print("changing_of_the_consumer_surplus", changing_consumer_surplus)
- print("producer_surplus_before_tax", producer_surplus_0)
- print("producer_surplus_after_tax", producer_surplus_1)
- print("changing_of_the_producer_surplus", changing_producer_surplus)
- print("tax_burden_of_consumer", tax_burden_consumer)
- print("tax_burden_of_producer", tax_burden_producer)
- print("tax_revenue", tax_revenue)
- print("deadweight_loss", deadweight_loss)
+    print(f"{lcl.ANSWER}:",)
+    print(f"{lcl.INITIAL_EQUILIBRIUM_QUANTITY}: {equilibrium_quantity},")
+    print(f"{lcl.INITIAL_EQUILIBRIUM_PRICE}: {equilibrium_price},")
+    print(f"{lcl.NEW_EQUILIBRIUM_QUANTITY}: {quantity_1},")
+    print(f"{lcl.NEW_PRODUCER_PRICE}: {price_supply},")
+    print(f"{lcl.NEW_CONSUMER_PRICE}: {price_demand},")
+    print(f"{lcl.CHANGING_OF_THE_QUANTITY}: {changing_quantity},")
+    print(f"{lcl.CHANGING_OF_THE_PRICE}: {changing_price},")
+    print(f"{lcl.CONSUMER_SURPLUS_BEFORE_TAX}: {consumer_surplus_0},")
+    print(f"{lcl.CONSUMER_SURPLUS_AFTER_TAX}: {consumer_surplus_1},")
+    print(f"{lcl.CHANGING_OF_THE_CONSUMER_SURPLUS}:{changing_consumer_s}")
+    print(f"{lcl.PRODUCER_SURPLUS_BEFORE_TAX}: {producer_surplus_0},")
+    print(f"{lcl.PRODUCER_SURPLUS_AFTER_TAX}: {producer_surplus_1},")
+    print(f"{lcl.CHANGING_OF_THE_PRODUCER_SURPLUS}: {changing_producer_s},")
+    print(f"{lcl.TAX_BURDEN_OF_CONSUMER}: {tax_burden_consumer},")
+    print(f"{lcl.TAX_BURDEN_OF_PRODUCER}: {tax_burden_producer},")
+    print(f"{lcl.TAX_REVENUE}: {tax_revenue},")
+    print(f"{lcl.DEADWEIGHT_LOSS}: {deadweight_loss}.")
 
 
 if __name__ == '__main__':
