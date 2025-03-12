@@ -1,3 +1,4 @@
+TOTAL_ADDRESSABLE_MARKET = "Макимальная ёмкоть рынка"
 SLOPE_OF_THE_DEMAND = "Наклон кривой спроса"
 INTERSECTION_POINT_OF_THE_SUPPLY = "Точка пересечения предложения"
 SLOPE_OF_THE_SUPPLY = "Наклон кривой предложения"
