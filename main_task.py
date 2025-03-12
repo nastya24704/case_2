@@ -7,7 +7,7 @@ import local as lcl
 
 def demand(price, a, b):
     """Function describing the quantity of supply.
-    
+
     :param price: price of the product
     :param a: demand cutoff price
     :param b: tangent of the angle of inclination
@@ -19,7 +19,7 @@ def demand(price, a, b):
 
 def supply(price, c, d):
     """Function describing the quantity of supply.
-   
+
     :param price: price of the product
     :param c: minimum supply
     :param d: tangent of the angle of inclination
@@ -36,16 +36,16 @@ d = float(input(f"{lcl.SLOPE_OF_THE_SUPPLY}:"))
 t = float(input(f"{lcl.TAX_RATE}:"))
 # We enter the values ​​of the function coefficients
 
-equilibrium_price = (a-c) / (d+b)
+
+equilibrium_price = (a - c) / (d + b)
 equilibrium_quantity = demand(equilibrium_price, a, b)
 # Finding the initial equilibrium in the market.
 
 
-price_supply = (c-a + b*t) / (-b-d)
+price_supply = (c - a + b * t) / (-b - d)
 price_demand = price_supply + t
 quantity_1 = demand(price_demand, a, b)
-""" We find the price of the consumer and producer after the introduction of
-the tax. """
+#We find the price of the consumer and producer after the tax.
 
 
 changing_quantity = quantity_1 - equilibrium_quantity
@@ -53,16 +53,16 @@ changing_price = price_supply - equilibrium_price
 # We find changing in quantity and price.
 
 
-consumer_surplus_0 = 1/2 * (a - equilibrium_price) * equilibrium_quantity
-consumer_surplus_1 = 1/2 * (a - price_demand) * quantity_1
+consumer_surplus_0 = 1 / 2 * (a - equilibrium_price) * equilibrium_quantity
+consumer_surplus_1 = 1 / 2 * (a - price_demand) * quantity_1
 
 if c < 0:
     producer_surplus_0 = 1 / 2 * (equilibrium_price +
-                                  c/d) * equilibrium_quantity
-    producer_surplus_1 = 1 / 2 * (price_demand + c/d) * quantity_1
+                                  c / d) * equilibrium_quantity
+    producer_surplus_1 = 1 / 2 * (price_demand + c / d) * quantity_1
 else:
-    producer_surplus_0 = (c + equilibrium_quantity)/2 * equilibrium_price
-    producer_surplus_1 = (c + quantity_1)/2 * price_supply
+    producer_surplus_0 = (c + equilibrium_quantity) / 2 * equilibrium_price
+    producer_surplus_1 = (c + quantity_1) / 2 * price_supply
 
 changing_consumer_s = consumer_surplus_1 - consumer_surplus_0
 changing_producer_s = producer_surplus_1 - producer_surplus_0
@@ -73,12 +73,16 @@ tax_burden_consumer = (price_demand - equilibrium_price) * quantity_1
 tax_burden_producer = (equilibrium_price - price_supply) * quantity_1
 tax_revenue = quantity_1 * t
 deadweight_loss = -(price_demand - price_supply) * (equilibrium_quantity -
-                                                    quantity_1) * 1/2
+                                                    quantity_1) * 1 / 2
 # We find tax revenues and deadweight loss.
 
 
 def main():
-    print(f"{lcl.ANSWER}:",)
+    
+    """Function that outputs all answers.
+    :return: None
+    """
+    print(f"{lcl.ANSWER}:", )
     print(f"{lcl.INITIAL_EQUILIBRIUM_QUANTITY}: {equilibrium_quantity},")
     print(f"{lcl.INITIAL_EQUILIBRIUM_PRICE}: {equilibrium_price},")
     print(f"{lcl.NEW_EQUILIBRIUM_QUANTITY}: {quantity_1},")
@@ -100,3 +104,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
